@@ -231,7 +231,9 @@ in
       wantedBy = [ "timers.target" ];
       unitConfig.ConditionUser = cfg.user;
       timerConfig = {
-        OnStartupSec = "2min";
+        # Relative to the timer itself, so the first run also happens when the
+        # timer is installed into a user manager that has been up for months.
+        OnActiveSec = "1min";
         OnUnitActiveSec = "${toString cfg.intervalMinutes}min";
       };
     };

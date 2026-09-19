@@ -94,11 +94,13 @@ pkgs.testers.runNixOSTest {
     machine.wait_for_open_port(8080)
     machine.succeed("install -o nixploy -m 0400 ${secrets}/key.txt /home/nixploy/age-key.txt")
 
-    with subtest("timer is scheduled for the container account only"):
+    with subtest("the timer runs the first check by itself"):
         machine.wait_for_unit("nixploy-watch.timer", "nixploy")
-
-    with subtest("no containers: nothing to report, nothing sent"):
-        start_watch()
+        machine.wait_until_succeeds(
+            "journalctl _SYSTEMD_USER_UNIT=nixploy-watch.service --no-pager"
+            " | grep -q 'no nixploy-managed containers found'",
+            timeout=120,
+        )
         assert emails() == []
 
     labels = (

@@ -1,0 +1,5 @@
+(library
+ (name nixploy_watch)
+ (libraries core core_unix async yojson)
+ (preprocess
+  (pps ppx_jane)))

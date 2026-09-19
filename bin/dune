@@ -1,0 +1,7 @@
+(executable
+ (name main)
+ (public_name nixploy-watch)
+ (package nixploy-watch)
+ (libraries nixploy_watch core core_unix.command_unix async)
+ (preprocess
+  (pps ppx_jane)))

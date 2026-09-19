@@ -1,0 +1,6 @@
+(test
+ (name watch_test)
+ (package nixploy-watch)
+ (libraries nixploy_watch core async yojson)
+ (preprocess
+  (pps ppx_jane)))
